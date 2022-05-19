@@ -36,7 +36,7 @@
             android:id="@+id/tv_home"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Home"
+            android:text="Search for recipes"
             android:textColor="@color/accent"
             android:textSize="@dimen/_25ssp"
             android:textStyle="bold"
@@ -51,17 +51,7 @@
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/tv_what_would_you_like_to_eat"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:text="What would you like to eat?"
-        android:textColor="@color/purple_200"
-        android:textStyle="bold"
-        android:textSize="@dimen/_18ssp"
-        app:layout_constraintTop_toBottomOf="@id/linear_header"
-        app:layout_constraintStart_toStartOf="@id/linear_header"/>
+
 
     <androidx.cardview.widget.CardView
         android:id="@+id/random_meal_card"
@@ -72,9 +62,9 @@
         android:layout_marginTop="@dimen/_10sdp"
         app:cardCornerRadius="@dimen/_10sdp"
         app:cardUseCompatPadding="true"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@id/linear_header"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_what_would_you_like_to_eat">
+        app:layout_constraintTop_toBottomOf="@id/linear_header">
 
 
         <ImageView
@@ -95,7 +85,7 @@
         android:textColor="@color/purple_200"
         android:textSize="@dimen/_17sdp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@id/tv_what_would_you_like_to_eat"
+        app:layout_constraintStart_toStartOf="@id/linear_header"
         app:layout_constraintTop_toBottomOf="@id/random_meal_card"/>
 
     <androidx.recyclerview.widget.RecyclerView
