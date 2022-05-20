@@ -34,7 +34,7 @@
 
         <TextView
             android:id="@+id/tv_home"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Search for recipes"
             android:textColor="@color/accent"
@@ -51,7 +51,26 @@
 
     </LinearLayout>
 
+            <TextView
+                android:id="@+id/tv_editors_picks"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_18sdp"
+                android:text="Editors Picks"
+                android:textColor="@color/purple_200"
+                android:textSize="@dimen/_17sdp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@id/linear_header"
+                app:layout_constraintTop_toBottomOf="@id/linear_header"/>
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_popular_meals"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_120sdp"
+                android:layout_marginStart="@dimen/_25sdp"
+                android:layout_marginEnd="@dimen/_25sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_editors_picks"/>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/random_meal_card"
@@ -62,9 +81,9 @@
         android:layout_marginTop="@dimen/_10sdp"
         app:cardCornerRadius="@dimen/_10sdp"
         app:cardUseCompatPadding="true"
-        app:layout_constraintStart_toStartOf="@id/linear_header"
+        app:layout_constraintStart_toStartOf="@id/tv_editors_picks"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/linear_header">
+        app:layout_constraintTop_toBottomOf="@id/rv_popular_meals">
 
 
         <ImageView
@@ -76,38 +95,19 @@
 
     </androidx.cardview.widget.CardView>
 
-    <TextView
-        android:id="@+id/tv_over_popular_items"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_18sdp"
-        android:text="Some popular items"
-        android:textColor="@color/purple_200"
-        android:textSize="@dimen/_17sdp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@id/linear_header"
-        app:layout_constraintTop_toBottomOf="@id/random_meal_card"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_popular_meals"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/_120sdp"
-        android:layout_marginStart="@dimen/_25sdp"
-        android:layout_marginEnd="@dimen/_25sdp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_over_popular_items"/>
 
     <TextView
         android:id="@+id/tv_categories"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_10sdp"
-        android:text="Categories"
+        android:text="Countries to pick from"
         android:textColor="@color/purple_200"
         android:textStyle="bold"
         android:textSize="@dimen/_17sdp"
-        app:layout_constraintStart_toStartOf="@id/rv_popular_meals"
-        app:layout_constraintTop_toBottomOf="@id/rv_popular_meals"/>
+        app:layout_constraintStart_toStartOf="@id/linear_header"
+        app:layout_constraintTop_toBottomOf="@id/random_meal_card"/>
 
     <androidx.cardview.widget.CardView
 
