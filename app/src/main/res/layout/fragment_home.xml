@@ -102,7 +102,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_10sdp"
-        android:text="Countries to pick from"
+        android:text="Categories to pick from"
         android:textColor="@color/purple_200"
         android:textStyle="bold"
         android:textSize="@dimen/_17sdp"

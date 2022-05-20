@@ -5,19 +5,25 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.cookbook.databinding.PopularItemsBinding
-import com.example.cookbook.pojo.CategoryMeals
-import com.example.cookbook.pojo.MealList
+import com.example.cookbook.pojo.MealsByCategory
 
 class MostPopularAdapter(): RecyclerView.Adapter<MostPopularAdapter.PopularMealViewHolder>() {
 
-    lateinit var onItemClick: ((CategoryMeals) -> Unit)
-    private var mealsList = ArrayList<CategoryMeals>()
+    lateinit var onItemClick: ((MealsByCategory) -> Unit)
+    private var mealsList = ArrayList<MealsByCategory>()
 
 
     class  PopularMealViewHolder(val binding: PopularItemsBinding): RecyclerView.ViewHolder(binding.root)
 
+    fun setMeals(mealsByCategoryList : ArrayList<MealsByCategory>){
+        this.mealsList = mealsByCategoryList
+        notifyDataSetChanged()
+    }
+
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PopularMealViewHolder {
-        return PopularMealViewHolder(PopularItemsBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+        return PopularMealViewHolder(
+            PopularItemsBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
     override fun onBindViewHolder(holder: PopularMealViewHolder, position: Int) {
@@ -34,9 +40,4 @@ class MostPopularAdapter(): RecyclerView.Adapter<MostPopularAdapter.PopularMealV
         return mealsList.size
     }
 
-
-    fun setMeals(mealsList : ArrayList<CategoryMeals>){
-        this.mealsList = mealsList
-        notifyDataSetChanged()
-    }
 }

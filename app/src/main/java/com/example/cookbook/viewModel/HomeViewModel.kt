@@ -4,20 +4,17 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.cookbook.pojo.CategoryList
-import com.example.cookbook.pojo.CategoryMeals
-import com.example.cookbook.pojo.Meal
-import com.example.cookbook.pojo.MealList
+import com.example.cookbook.pojo.*
 import com.example.cookbook.retrofit.RetrofitInstance
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
 
 class HomeViewModel(): ViewModel() {
 
     private var randomMealLiveData = MutableLiveData<Meal>()
-    private var popularItemsLiveData = MutableLiveData<List<CategoryMeals>>()
+    private var popularItemsLiveData = MutableLiveData<List<MealsByCategory>>()
+    private var categoriesLiveData = MutableLiveData<List<Category>>()
 
     fun getRandomMeal(){
 
@@ -43,22 +40,40 @@ class HomeViewModel(): ViewModel() {
     }
 
     fun getPopularItems(){
-        RetrofitInstance.api.getPopularItems("Beef").enqueue(object : Callback<CategoryList>{
-            override fun onResponse(call: Call<CategoryList>, response: Response<CategoryList>) {
+        RetrofitInstance.api.getPopularItems("Beef").enqueue(object : Callback<MealsByCategoryList>{
+            override fun onResponse(call: Call<MealsByCategoryList>, response: Response<MealsByCategoryList>) {
                 if(response.body() != null){
                     popularItemsLiveData.value = response.body()!!.meals
                 }
             }
 
-            override fun onFailure(call: Call<CategoryList>, t: Throwable) {
+            override fun onFailure(call: Call<MealsByCategoryList>, t: Throwable) {
                 Log.d("Home Fragment", "Something is NOT ok")
             }
 
         })
     }
 
-    fun observePopularItemsLiveData(): LiveData<List<CategoryMeals>>{
+    fun observePopularItemsLiveData(): LiveData<List<MealsByCategory>>{
         return popularItemsLiveData
+    }
+
+    fun getCategories(){
+        RetrofitInstance.api.getCategories().enqueue(object : Callback<CategoryList>{
+            override fun onResponse(call: Call<CategoryList>, response: Response<CategoryList>) {
+                response.body()?.let{
+                    categoriesLiveData.postValue(it.categories)
+                }
+            }
+
+            override fun onFailure(call: Call<CategoryList>, t: Throwable) {
+                Log.d("Home View Model", "Something went wrong")
+            }
+        })
+    }
+
+    fun observeCategoriesLiveData(): LiveData<List<Category>>{
+        return categoriesLiveData
     }
 
 
