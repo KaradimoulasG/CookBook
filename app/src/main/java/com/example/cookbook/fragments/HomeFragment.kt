@@ -6,11 +6,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.example.cookbook.activities.CategoryMealsActivity
 import com.example.cookbook.activities.MealActivity
 import com.example.cookbook.adapters.CategoriesAdapter
 import com.example.cookbook.adapters.MostPopularAdapter
@@ -32,6 +32,7 @@ class HomeFragment : Fragment() {
         const val MEAL_ID = "com.example.cookbook.fragments.idMeal"
         const val MEAL_NAME = "com.example.cookbook.fragments.nameMeal"
         const val MEAL_THUMB = "com.example.cookbook.fragments.thumbMeal"
+        const val CATEGORY_NAME = "com.example.cookbook.fragments.categoryName"
     }
 
 
@@ -52,22 +53,26 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        //prepare RVs
         preparePopularItemsRecyclerView()
+        prepareCategoriesRecyclerView()
 
+        //Random Meal
         homeMvvm.getRandomMeal()
         observeRandomMeal()
         onRandomMealClick()
 
+        //Editor's picks items
         homeMvvm.getPopularItems()
         observePopularItemsLiveData()
         onPopularItemClick()
 
-        prepareCategoriesRecyclerView()
+        //Categories
         homeMvvm.getCategories()
         observeCategoriesLiveData()
+        onCategoryClick()
 
     }
-
 
 
     private fun onPopularItemClick() {
@@ -126,6 +131,14 @@ class HomeFragment : Fragment() {
         binding.rvCategories.apply {
             layoutManager = GridLayoutManager(activity, 3, GridLayoutManager.VERTICAL, false)
             adapter = categoriesAdapter
+        }
+    }
+
+    private fun onCategoryClick() {
+        categoriesAdapter.onItemClick = {
+            val intent = Intent(activity, CategoryMealsActivity::class.java)
+            intent.putExtra(CATEGORY_NAME, it.strCategory)
+            startActivity(intent)
         }
     }
 

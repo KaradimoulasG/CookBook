@@ -13,7 +13,7 @@ class MostPopularAdapter(): RecyclerView.Adapter<MostPopularAdapter.PopularMealV
     private var mealsList = ArrayList<MealsByCategory>()
 
 
-    class  PopularMealViewHolder(val binding: PopularItemsBinding): RecyclerView.ViewHolder(binding.root)
+    inner class PopularMealViewHolder(val binding: PopularItemsBinding): RecyclerView.ViewHolder(binding.root)
 
     fun setMeals(mealsByCategoryList : ArrayList<MealsByCategory>){
         this.mealsList = mealsByCategoryList

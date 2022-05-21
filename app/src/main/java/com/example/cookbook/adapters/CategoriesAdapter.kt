@@ -7,8 +7,11 @@ import com.bumptech.glide.Glide
 import com.example.cookbook.databinding.CategoryItemBinding
 import com.example.cookbook.databinding.PopularItemsBinding
 import com.example.cookbook.pojo.Category
+import com.example.cookbook.pojo.CategoryList
 
 class CategoriesAdapter: RecyclerView.Adapter<CategoriesAdapter.CategoryViewHolder>() {
+
+    var onItemClick : ((Category) -> Unit)? = null
 
     private var categoriesList = ArrayList<Category>()
     fun setCategoryList(categoriesList: List<Category>){
@@ -28,6 +31,10 @@ class CategoriesAdapter: RecyclerView.Adapter<CategoriesAdapter.CategoryViewHold
             .load(categoriesList[position].strCategoryThumb)
             .into(holder.binding.imgCategory)
         holder.binding.tvCategoryName.text = categoriesList[position].strCategory
+
+        holder.itemView.setOnClickListener{
+            onItemClick?.invoke(categoriesList[position])
+        }
     }
 
     override fun getItemCount(): Int {

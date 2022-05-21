@@ -74,8 +74,6 @@ class MealActivity : AppCompatActivity() {
         binding.tvInstructionsText.setTextColor(resources.getColor(R.color.white))
     }
 
-
-
     private fun onYoutubeClick() {
         binding.imgYoutube.setOnClickListener{
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(youtubeLink))
@@ -92,7 +90,6 @@ class MealActivity : AppCompatActivity() {
         binding.tvInstructionsText.visibility = View.INVISIBLE
         binding.imgYoutube.visibility = View.INVISIBLE
     }
-
 
     private fun onResponse(){
         binding.progressBar.visibility = View.INVISIBLE
