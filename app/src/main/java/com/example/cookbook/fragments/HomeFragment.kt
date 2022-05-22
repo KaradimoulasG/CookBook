@@ -16,6 +16,7 @@ import com.example.cookbook.adapters.CategoriesAdapter
 import com.example.cookbook.adapters.MostPopularAdapter
 import com.example.cookbook.databinding.ActivityMainBinding
 import com.example.cookbook.databinding.FragmentHomeBinding
+import com.example.cookbook.fragments.bottomView.MealBottomViewFragment
 import com.example.cookbook.pojo.MealsByCategory
 import com.example.cookbook.pojo.Meal
 import com.example.cookbook.viewModel.HomeViewModel
@@ -59,7 +60,7 @@ class HomeFragment : Fragment() {
         prepareCategoriesRecyclerView()
 
         //Random Meal
-        mainActivityViewModel.getRandomMeal()
+        //mainActivityViewModel.getRandomMeal()
         observeRandomMeal()
         onRandomMealClick()
 
@@ -73,6 +74,7 @@ class HomeFragment : Fragment() {
         observeCategoriesLiveData()
         onCategoryClick()
 
+        onPopularItemLongClick()
     }
 
 
@@ -140,6 +142,13 @@ class HomeFragment : Fragment() {
             val intent = Intent(activity, CategoryMealsActivity::class.java)
             intent.putExtra(CATEGORY_NAME, it.strCategory)
             startActivity(intent)
+        }
+    }
+
+    private fun onPopularItemLongClick(){
+        popularItemsAdapter.onLongItemClick = {
+            val mealBottomViewFragment = MealBottomViewFragment.newInstance(it.idMeal)
+            mealBottomViewFragment.show(childFragmentManager, "Meal Info")
         }
     }
 

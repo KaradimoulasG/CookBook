@@ -4,9 +4,11 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.cookbook.db.MealDatabase
 import com.example.cookbook.pojo.*
 import com.example.cookbook.retrofit.RetrofitInstance
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -19,6 +21,12 @@ class HomeViewModel(
     private var popularItemsLiveData = MutableLiveData<List<MealsByCategory>>()
     private var categoriesLiveData = MutableLiveData<List<Category>>()
     private var favoritesMealLiveData = mealDatabase.mealDao().getAllMeals()
+    private var bottomViewLiveData = MutableLiveData<Meal>()
+
+
+    init{
+        getRandomMeal()
+    }
 
     fun getRandomMeal(){
 
@@ -27,8 +35,6 @@ class HomeViewModel(
                 if(response.body() != null){
                     val randomMeal: Meal = response.body()!!.meals[0]
                     randomMealLiveData.value = randomMeal
-                }else{
-                    return
                 }
             }
 
@@ -84,5 +90,33 @@ class HomeViewModel(
         return favoritesMealLiveData
     }
 
+    fun insertMeal(meal: Meal){
+        viewModelScope.launch {
+            mealDatabase.mealDao().upsertMeal(meal)
+        }
+    }
+
+    fun deleteMeal(meal: Meal){
+        viewModelScope.launch {
+            mealDatabase.mealDao().deleteMeal(meal)
+        }
+    }
+
+    fun getMealById(id: String){
+        RetrofitInstance.api.getMealDetails(id).enqueue(object : Callback<MealList>{
+            override fun onResponse(call: Call<MealList>, response: Response<MealList>) {
+                val meal = response.body()?.meals?.first()
+                meal?.let{
+                    bottomViewLiveData.postValue(it)
+                }
+            }
+
+            override fun onFailure(call: Call<MealList>, t: Throwable) {
+                Log.d("Home View Model", "Something went wrong")
+            }
+        })
+    }
+
+    fun observeBottomViewMeal(): LiveData<Meal> = bottomViewLiveData
 
 }
