@@ -5,6 +5,7 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -12,9 +13,11 @@ import com.bumptech.glide.Glide
 import com.example.cookbook.R
 import com.example.cookbook.databinding.ActivityMainBinding
 import com.example.cookbook.databinding.ActivityMealBinding
+import com.example.cookbook.db.MealDatabase
 import com.example.cookbook.fragments.HomeFragment
 import com.example.cookbook.pojo.Meal
 import com.example.cookbook.viewModel.MealViewModel
+import com.example.cookbook.viewModel.MealViewModelFactory
 
 class MealActivity : AppCompatActivity() {
 
@@ -30,7 +33,11 @@ class MealActivity : AppCompatActivity() {
         binding = ActivityMealBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        mealMvvm = ViewModelProvider(this)[MealViewModel::class.java]
+        val mealDatabase = MealDatabase.getInstance(this)
+        val viewModelFactory = MealViewModelFactory(mealDatabase)
+        mealMvvm = ViewModelProvider(this, viewModelFactory)[MealViewModel::class.java]
+//        mealMvvm = ViewModelProvider(this)[MealViewModel::class.java]
+
         getMealInfoFromIntent()
         setInfoInViews()
 
@@ -39,19 +46,22 @@ class MealActivity : AppCompatActivity() {
         observeMealDetailsLiveData()
 
         onYoutubeClick()
+        onFabClick()
     }
 
 
+    private var savedMeal: Meal ?= null
     private fun observeMealDetailsLiveData() {
         mealMvvm.observeMealDetailLiveData().observe(this, object : Observer<Meal>{
             override fun onChanged(t: Meal?) {
                 onResponse()
 
+                savedMeal = t
                 binding.tvCategory.text = "Category : ${t!!.strCategory}"
                 binding.tvArea.text = "Area : ${t!!.strArea}"
                 binding.tvInstructionsText.text = t!!.strInstructions
 
-                youtubeLink = t.strYoutube
+                youtubeLink = t.strYoutube.toString()
             }
         })
     }
@@ -101,5 +111,14 @@ class MealActivity : AppCompatActivity() {
         binding.imgYoutube.visibility = View.VISIBLE
     }
 
+
+    private fun onFabClick() {
+        binding.fabAdd.setOnClickListener(){
+            savedMeal?.let {
+                mealMvvm.insertMeal(it)
+                Toast.makeText(this, "Meal Saved", Toast.LENGTH_LONG).show()
+            }
+        }
+    }
 
 }

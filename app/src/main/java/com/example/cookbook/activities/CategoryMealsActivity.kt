@@ -12,6 +12,7 @@ import com.example.cookbook.adapters.CategoryMealsAdapter
 import com.example.cookbook.databinding.ActivityCategoryMealsBinding
 import com.example.cookbook.databinding.ActivityMealBinding
 import com.example.cookbook.fragments.HomeFragment
+import com.example.cookbook.pojo.Meal
 import com.example.cookbook.viewModel.CategoryMealsViewModel
 
 class CategoryMealsActivity : AppCompatActivity() {
@@ -29,6 +30,7 @@ class CategoryMealsActivity : AppCompatActivity() {
         categoryMealsViewModel = ViewModelProvider(this)[CategoryMealsViewModel::class.java]
         categoryMealsViewModel.getMealsByCategoryName(intent.getStringExtra(HomeFragment.CATEGORY_NAME)!!)
         categoryMealsViewModel.observeMealsLiveData().observe(this, Observer {
+            binding.tvCategoryCount.text = it.size.toString()
             categoryMealsAdapter.setMealsList(it)
         })
 

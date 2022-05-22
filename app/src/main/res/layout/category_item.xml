@@ -23,7 +23,7 @@
         app:layout_constraintTop_toBottomOf="@id/img_category"
         android:textSize="@dimen/_15ssp"
         android:text="Category Name"
-        android:textColor="@color/g_black"
+        android:textColor="@color/accent"
         android:textStyle="bold"
         android:layout_marginTop="@dimen/_3sdp"/>
 
