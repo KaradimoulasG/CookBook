@@ -36,7 +36,7 @@ class MostPopularAdapter(): RecyclerView.Adapter<MostPopularAdapter.PopularMealV
             onItemClick.invoke(mealsList[position])
         }
 
-        holder.itemView.setOnClickListener{
+        holder.itemView.setOnLongClickListener {
             onLongItemClick?.invoke(mealsList[position])
             true
         }

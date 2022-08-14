@@ -2,7 +2,9 @@ package com.example.cookbook.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavDestination
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import com.example.cookbook.R
@@ -23,11 +25,15 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val bottomNavigation = findViewById<BottomNavigationView>(R.id.btm_nav)
+        var bottomNavigation = findViewById<BottomNavigationView>(R.id.btm_nav)
         val navController = Navigation.findNavController(this, R.id.host_fragment)
 
 
         NavigationUI.setupWithNavController(bottomNavigation, navController)
+        navController.addOnDestinationChangedListener { _, nd: NavDestination, _ ->
+            if (nd.id == R.id.searchFragment) bottomNavigation.visibility = View.GONE
+            else bottomNavigation.visibility = View.VISIBLE
+        }
     }
 }
 

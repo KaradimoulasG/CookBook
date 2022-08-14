@@ -6,9 +6,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.example.cookbook.R
 import com.example.cookbook.activities.CategoryMealsActivity
 import com.example.cookbook.activities.MainActivity
 import com.example.cookbook.activities.MealActivity
@@ -75,6 +77,10 @@ class HomeFragment : Fragment() {
         onCategoryClick()
 
         onPopularItemLongClick()
+
+        binding.searchBtn.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_searchFragment)
+        }
     }
 
 
