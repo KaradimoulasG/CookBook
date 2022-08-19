@@ -5,11 +5,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.cookbook.databinding.MealItemBinding
+import com.example.cookbook.pojo.Category
 import com.example.cookbook.pojo.MealsByCategory
 
 class CategoryMealsAdapter: RecyclerView.Adapter<CategoryMealsAdapter.CategoryMealsViewHolder>(){
 
     private var mealsList = ArrayList<MealsByCategory>()
+    private var categoryList:List<Category> = ArrayList()
+    private lateinit var onItemClick: OnItemCategoryClicked
 
 
     fun setMealsList(mealsList: List<MealsByCategory>){
@@ -30,9 +33,23 @@ class CategoryMealsAdapter: RecyclerView.Adapter<CategoryMealsAdapter.CategoryMe
             .load(mealsList[position].strMealThumb)
             .into(holder.binding.imgMeal)
         holder.binding.tvMealName.text = mealsList[position].strMeal
+
+        holder.itemView.setOnClickListener {
+            onItemClick.onClickListener(categoryList[position])
+        }
     }
 
     override fun getItemCount(): Int {
         return mealsList.size
     }
+
+    fun onItemClicked(onItemClick: OnItemCategoryClicked){
+        this.onItemClick = onItemClick
+    }
+
+    interface OnItemCategoryClicked{
+        fun onClickListener(category: Category)
+    }
+
+
 }

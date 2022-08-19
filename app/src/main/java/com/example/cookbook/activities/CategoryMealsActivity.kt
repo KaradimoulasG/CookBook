@@ -1,5 +1,6 @@
 package com.example.cookbook.activities
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,6 +13,7 @@ import com.example.cookbook.adapters.CategoryMealsAdapter
 import com.example.cookbook.databinding.ActivityCategoryMealsBinding
 import com.example.cookbook.databinding.ActivityMealBinding
 import com.example.cookbook.fragments.HomeFragment
+import com.example.cookbook.pojo.Category
 import com.example.cookbook.pojo.Meal
 import com.example.cookbook.viewModel.CategoryMealsViewModel
 
@@ -33,7 +35,12 @@ class CategoryMealsActivity : AppCompatActivity() {
             binding.tvCategoryCount.text = it.size.toString()
             categoryMealsAdapter.setMealsList(it)
         })
+    }
 
+    override fun onResume() {
+        super.onResume()
+
+        onCategoryClick()
     }
 
     private fun prepareRecyclerView() {
@@ -42,5 +49,22 @@ class CategoryMealsActivity : AppCompatActivity() {
             layoutManager = GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false)
             adapter = categoryMealsAdapter
         }
+    }
+
+
+    private fun onCategoryClick() {
+        categoryMealsAdapter.onItemClicked(object : CategoryMealsAdapter.OnItemCategoryClicked{
+            override fun onClickListener(category: Category) {
+                val intent = Intent(applicationContext, MealActivity::class.java)
+                intent.putExtra(CATEGORY_NAME,category.strCategory)
+                startActivity(intent)
+            }
+        })
+    }
+
+
+    companion object {
+        const val CATEGORY_NAME = "com.example.cookbook.fragments.nameCategory"
+
     }
 }
