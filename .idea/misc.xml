@@ -3,12 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/George/Downloads/CookBook/app/src/main/res/drawable/ic_area.xml" value="0.146" />
         <entry key="..\:/Users/George/Downloads/CookBook/app/src/main/res/drawable/ic_home.xml" value="0.131" />
         <entry key="..\:/Users/George/Downloads/CookBook/app/src/main/res/drawable/ic_launcher_background.xml" value="0.131" />
         <entry key="..\:/Users/George/Downloads/CookBook/app/src/main/res/drawable/ic_search.xml" value="0.131" />
         <entry key="..\:/Users/George/Downloads/CookBook/app/src/main/res/drawable/ic_searh.xml" value="0.131" />
         <entry key="..\:/Users/George/Downloads/CookBook/app/src/main/res/drawable/ic_youtube.xml" value="0.131" />
         <entry key="..\:/Users/George/Downloads/CookBook/app/src/main/res/drawable/ic_youtube_white.xml" value="0.111" />
+        <entry key="..\:/Users/George/Downloads/CookBook/app/src/main/res/drawable/pill_button_red.xml" value="0.146" />
         <entry key="..\:/Users/George/Downloads/CookBook/app/src/main/res/drawable/search_box.xml" value="0.146" />
         <entry key="..\:/Users/George/Downloads/CookBook/app/src/main/res/layout/activity_category_meals.xml" value="0.2259963768115942" />
         <entry key="..\:/Users/George/Downloads/CookBook/app/src/main/res/layout/activity_main.xml" value="0.2259963768115942" />

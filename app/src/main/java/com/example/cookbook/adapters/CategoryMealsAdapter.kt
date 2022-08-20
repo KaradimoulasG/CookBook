@@ -12,7 +12,8 @@ class CategoryMealsAdapter: RecyclerView.Adapter<CategoryMealsAdapter.CategoryMe
 
     private var mealsList = ArrayList<MealsByCategory>()
     private var categoryList:List<Category> = ArrayList()
-    private lateinit var onItemClick: OnItemCategoryClicked
+    lateinit var onItemClick: ((MealsByCategory) -> Unit)
+
 
 
     fun setMealsList(mealsList: List<MealsByCategory>){
@@ -35,7 +36,7 @@ class CategoryMealsAdapter: RecyclerView.Adapter<CategoryMealsAdapter.CategoryMe
         holder.binding.tvMealName.text = mealsList[position].strMeal
 
         holder.itemView.setOnClickListener {
-            onItemClick.onClickListener(categoryList[position])
+            onItemClick.invoke(mealsList[position])
         }
     }
 
@@ -47,8 +48,8 @@ class CategoryMealsAdapter: RecyclerView.Adapter<CategoryMealsAdapter.CategoryMe
         this.onItemClick = onItemClick
     }
 
-    interface OnItemCategoryClicked{
-        fun onClickListener(category: Category)
+    interface OnItemCategoryClicked : (MealsByCategory) -> Unit {
+        fun onClickListener(category: MealsByCategory)
     }
 
 
