@@ -40,7 +40,7 @@ class CategoryMealsActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        onCategoryClick()
+        onItemClick()
     }
 
     private fun prepareRecyclerView() {
@@ -52,14 +52,14 @@ class CategoryMealsActivity : AppCompatActivity() {
     }
 
 
-    private fun onCategoryClick() {
-        categoryMealsAdapter.onItemClicked(object : CategoryMealsAdapter.OnItemCategoryClicked{
-            override fun onClickListener(category: Category) {
-                val intent = Intent(applicationContext, MealActivity::class.java)
-                intent.putExtra(CATEGORY_NAME,category.strCategory)
-                startActivity(intent)
-            }
-        })
+    private fun onItemClick() {
+        categoryMealsAdapter.onItemClick = {
+            val intent = Intent(applicationContext, MealActivity::class.java)
+            intent.putExtra(HomeFragment.MEAL_ID, it.idMeal)
+            intent.putExtra(HomeFragment.MEAL_NAME, it.strMeal)
+            intent.putExtra(HomeFragment.MEAL_THUMB, it.strMealThumb)
+            startActivity(intent)
+        }
     }
 
 
