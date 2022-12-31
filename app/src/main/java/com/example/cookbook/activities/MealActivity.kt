@@ -18,6 +18,7 @@ import com.example.cookbook.fragments.HomeFragment
 import com.example.cookbook.pojo.Meal
 import com.example.cookbook.viewModel.MealViewModel
 import com.example.cookbook.viewModel.MealViewModelFactory
+import timber.log.Timber
 
 class MealActivity : AppCompatActivity() {
 
@@ -26,7 +27,9 @@ class MealActivity : AppCompatActivity() {
     private lateinit var mealName: String
     private lateinit var mealThumb: String
     private lateinit var mealMvvm: MealViewModel
-    private lateinit var youtubeLink: String
+    private var youtubeLink: String? = null
+    private var youtubeVideoDeleted: Boolean = false
+    private var savedMeal: Meal ?= null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,12 +39,15 @@ class MealActivity : AppCompatActivity() {
         val mealDatabase = MealDatabase.getInstance(this)
         val viewModelFactory = MealViewModelFactory(mealDatabase)
         mealMvvm = ViewModelProvider(this, viewModelFactory)[MealViewModel::class.java]
-//        mealMvvm = ViewModelProvider(this)[MealViewModel::class.java]
 
         getMealInfoFromIntent()
         setInfoInViews()
-
         onLoading()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
         mealMvvm.getMealDetails(mealId)
         observeMealDetailsLiveData()
 
@@ -49,21 +55,18 @@ class MealActivity : AppCompatActivity() {
         onFabClick()
     }
 
-
-    private var savedMeal: Meal ?= null
     private fun observeMealDetailsLiveData() {
-        mealMvvm.observeMealDetailLiveData().observe(this, object : Observer<Meal>{
-            override fun onChanged(t: Meal?) {
-                onResponse()
+        mealMvvm.observeMealDetailLiveData().observe(this) { t ->
+            onResponse()
 
-                savedMeal = t
-                binding.tvCategory.text = "Category : ${t!!.strCategory}"
-                binding.tvArea.text = "Area : ${t!!.strArea}"
-                binding.tvInstructionsText.text = t!!.strInstructions
+            savedMeal = t
+            binding.tvCategory.text = getString(R.string.meal_act_category, t.strCategory)
+            binding.tvArea.text = getString(R.string.meal_act_area, t.strArea)
+            binding.tvInstructionsText.text = t.strInstructions
 
-                youtubeLink = t.strYoutube.toString()
-            }
-        })
+            if (t.strYoutube.isNullOrEmpty()) youtubeVideoDeleted = true
+            else youtubeLink = t.strYoutube.toString()
+        }
     }
 
     private fun getMealInfoFromIntent() {
@@ -79,44 +82,54 @@ class MealActivity : AppCompatActivity() {
             .into(binding.imgMealView)
 
         binding.collapsingToolbar.title = mealName
-        binding.collapsingToolbar.setCollapsedTitleTextColor(resources.getColor(R.color.white))
-        binding.collapsingToolbar.setExpandedTitleColor(resources.getColor(R.color.white))
-        binding.tvInstructionsText.setTextColor(resources.getColor(R.color.white))
+        binding.collapsingToolbar.setCollapsedTitleTextColor(getColor(R.color.white))
+        binding.collapsingToolbar.setExpandedTitleColor(getColor(R.color.white))
+        binding.tvInstructionsText.setTextColor(getColor(R.color.white))
     }
 
     private fun onYoutubeClick() {
+
         binding.imgYoutube.setOnClickListener{
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(youtubeLink))
-            startActivity(intent)
+            when (youtubeVideoDeleted) {
+                false -> {
+                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(youtubeLink))
+                    startActivity(intent)
+                }
+                true -> Toast.makeText(this, getString(R.string.deleted_youtube_video), Toast.LENGTH_LONG).show()
+            }
         }
     }
 
     private fun onLoading(){
-        binding.progressBar.visibility = View.VISIBLE
-        binding.fabAdd.visibility = View.INVISIBLE
-        binding.tvInstructions.visibility = View.INVISIBLE
-        binding.tvCategory.visibility = View.INVISIBLE
-        binding.tvArea.visibility = View.INVISIBLE
-        binding.tvInstructionsText.visibility = View.INVISIBLE
-        binding.imgYoutube.visibility = View.INVISIBLE
+        binding.apply {
+            progressBar.visibility = View.VISIBLE
+            fabAdd.visibility = View.INVISIBLE
+            tvInstructions.visibility = View.INVISIBLE
+            tvCategory.visibility = View.INVISIBLE
+            tvArea.visibility = View.INVISIBLE
+            tvInstructionsText.visibility = View.INVISIBLE
+            imgYoutube.visibility = View.INVISIBLE
+        }
     }
 
     private fun onResponse(){
-        binding.progressBar.visibility = View.INVISIBLE
-        binding.fabAdd.visibility = View.VISIBLE
-        binding.tvInstructions.visibility = View.VISIBLE
-        binding.tvCategory.visibility = View.VISIBLE
-        binding.tvArea.visibility = View.VISIBLE
-        binding.tvInstructionsText.visibility = View.VISIBLE
-        binding.imgYoutube.visibility = View.VISIBLE
+        binding.apply {
+            progressBar.visibility = View.INVISIBLE
+            fabAdd.visibility = View.VISIBLE
+            tvInstructions.visibility = View.VISIBLE
+            tvCategory.visibility = View.VISIBLE
+            tvArea.visibility = View.VISIBLE
+            tvInstructionsText.visibility = View.VISIBLE
+            imgYoutube.visibility = View.VISIBLE
+        }
     }
 
 
     private fun onFabClick() {
-        binding.fabAdd.setOnClickListener(){
+        binding.fabAdd.setOnClickListener {
             savedMeal?.let {
                 mealMvvm.insertMeal(it)
-                Toast.makeText(this, "Meal Saved", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, getString(R.string.meal_saved), Toast.LENGTH_LONG).show()
             }
         }
     }

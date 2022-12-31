@@ -64,7 +64,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_5sdp"
                 android:layout_marginTop="@dimen/_5sdp"
-                android:layout_marginEnd="@dimen/_5sdp"
+                android:layout_marginEnd="@dimen/_60sdp"
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -120,7 +120,7 @@
                 android:textColor="@color/black"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@id/tv_instructions"
-                app:layout_constraintTop_toBottomOf="@id/tv_instructions"/>
+                app:layout_constraintTop_toBottomOf="@id/tv_instructions" />
 
             <LinearLayout
                 android:id="@+id/img_youtube"
@@ -130,8 +130,8 @@
                 android:layout_margin="@dimen/_16sdp"
                 android:background="@drawable/pill_button_red"
                 android:orientation="horizontal"
-                app:layout_constraintTop_toBottomOf="@id/tv_instructions_text"
-                app:layout_constraintStart_toStartOf="parent">
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_instructions_text">
 
 
                 <RelativeLayout
@@ -168,7 +168,6 @@
                 </RelativeLayout>
 
             </LinearLayout>
-
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

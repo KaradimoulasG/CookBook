@@ -13,9 +13,10 @@ import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import timber.log.Timber
 
 class MealViewModel(
-    val mealDatabase: MealDatabase
+    private val mealDatabase: MealDatabase
 ): ViewModel() {
 
     private var mealDetailsLiveData = MutableLiveData<Meal>()
@@ -30,7 +31,7 @@ class MealViewModel(
             }
 
             override fun onFailure(call: Call<MealList>, t: Throwable) {
-                Log.d("Meal Activityy", "Something went wrong")
+                Timber.tag("Meal Activity").d("Something went wrong")
             }
         })
     }

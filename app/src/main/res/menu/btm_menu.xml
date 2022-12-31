@@ -2,15 +2,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:title="Home"
+        android:title="@string/btm_menu_home"
+        android:enabled="true"
         android:icon="@drawable/ic_home"
         android:id="@+id/homeFragment"/>
     <item
-        android:title="Favorites"
+        android:title="@string/btm_menu_favorites"
+        android:enabled="true"
         android:icon="@drawable/ic_favorites"
         android:id="@+id/favouritesFragment"/>
     <item
-        android:title="Categories"
+        android:title="@string/btm_menu_categories"
+        android:enabled="true"
         android:icon="@drawable/ic_categories"
         android:id="@+id/categoriesFragment"/>
 

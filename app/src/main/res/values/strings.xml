@@ -2,4 +2,15 @@
     <string name="app_name">CookBook</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <string name="meal_act_category">Category: %s</string>
+    <string name="meal_act_area">Area: %s</string>
+    <string name="meal_saved">Meal Saved</string>
+    <string name="deleted_youtube_video"> Whoops! Seems like this YouTube video is no longer available</string>
+
+    <!--  Navigation  -->
+    <string name="btm_menu_home">Home</string>
+    <string name="btm_menu_favorites">Favorites</string>
+    <string name="btm_menu_categories">Categories</string>
 </resources>

@@ -83,15 +83,15 @@ class FavouritesFragment : Fragment() {
 
 
     private fun observeFavourites() {
-        viewModel.observeFavoritesMealsLiveData().observe(requireActivity(), Observer {
+        viewModel.observeFavoritesMealsLiveData().observe(requireActivity()) {
             favouritesAdapter.differ.submitList(it)
-        })
+        }
     }
 
     private fun prepareRecyclerView() {
         favouritesAdapter = FavouritesMealsAdapter()
         binding.rvFavourites.apply {
-            layoutManager = GridLayoutManager(context, 2, GridLayoutManager.HORIZONTAL, false)
+            layoutManager = GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false)
             adapter = favouritesAdapter
         }
     }
