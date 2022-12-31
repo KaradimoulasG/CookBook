@@ -20,6 +20,7 @@ import com.example.cookbook.databinding.FragmentSearchBinding
 import com.example.cookbook.fragments.HomeFragment.Companion.MEAL_ID
 import com.example.cookbook.fragments.HomeFragment.Companion.MEAL_NAME
 import com.example.cookbook.fragments.HomeFragment.Companion.MEAL_THUMB
+import com.example.cookbook.viewModel.CategoryMealsViewModel
 import com.example.cookbook.viewModel.MealViewModel
 import com.example.cookbook.viewModel.SearchViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationItemView
@@ -37,7 +38,7 @@ class SearchFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         myAdapter = CategoryMealsAdapter()
-        searchMvvm = ViewModelProviders.of(this)[SearchViewModel::class.java]
+        searchMvvm = ViewModelProvider(this)[SearchViewModel::class.java]
     }
 
     override fun onCreateView(
