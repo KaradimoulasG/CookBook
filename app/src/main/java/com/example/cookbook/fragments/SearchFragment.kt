@@ -2,29 +2,20 @@ package com.example.cookbook.fragments
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.lifecycle.LifecycleOwner
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
-import com.example.cookbook.R
-import com.example.cookbook.activities.CategoryMealsActivity
 import com.example.cookbook.activities.MealActivity
 import com.example.cookbook.adapters.CategoryMealsAdapter
 import com.example.cookbook.databinding.FragmentSearchBinding
 import com.example.cookbook.fragments.HomeFragment.Companion.MEAL_ID
 import com.example.cookbook.fragments.HomeFragment.Companion.MEAL_NAME
 import com.example.cookbook.fragments.HomeFragment.Companion.MEAL_THUMB
-import com.example.cookbook.viewModel.CategoryMealsViewModel
-import com.example.cookbook.viewModel.MealViewModel
 import com.example.cookbook.viewModel.SearchViewModel
-import com.google.android.material.bottomnavigation.BottomNavigationItemView
-import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class SearchFragment : Fragment() {
 
@@ -34,7 +25,6 @@ class SearchFragment : Fragment() {
     private var mealId = ""
     private var mealStr = ""
     private var mealThumb = ""
-    private var mealThumb2 = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,7 +33,8 @@ class SearchFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
@@ -60,7 +51,7 @@ class SearchFragment : Fragment() {
 
     private fun setOnMealCardClick() {
         binding.searchedMealCard.setOnClickListener {
-            val intent = Intent(context, MealActivity:: class.java)
+            val intent = Intent(context, MealActivity::class.java)
             intent.putExtra(MEAL_ID, mealId)
             intent.putExtra(MEAL_NAME, mealStr)
             intent.putExtra(MEAL_THUMB, mealThumb)
@@ -78,7 +69,6 @@ class SearchFragment : Fragment() {
                 .show()
             else {
                 binding.apply {
-
                     mealId = it.idMeal
                     mealStr = it.strMeal.toString()
                     mealThumb = it.strMealThumb.toString()
@@ -89,7 +79,6 @@ class SearchFragment : Fragment() {
 
                     tvSearchedMeal.text = it.strMeal
                     searchedMealCard.visibility = View.VISIBLE
-
                 }
             }
         }
