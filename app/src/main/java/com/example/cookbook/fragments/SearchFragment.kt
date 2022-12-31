@@ -34,6 +34,7 @@ class SearchFragment : Fragment() {
     private var mealId = ""
     private var mealStr = ""
     private var mealThumb = ""
+    private var mealThumb2 = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
