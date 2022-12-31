@@ -64,7 +64,6 @@ class SearchFragment : Fragment() {
             intent.putExtra(MEAL_ID, mealId)
             intent.putExtra(MEAL_NAME, mealStr)
             intent.putExtra(MEAL_THUMB, mealThumb)
-
             startActivity(intent)
 
         }
