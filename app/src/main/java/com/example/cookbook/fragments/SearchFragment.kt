@@ -60,7 +60,6 @@ class SearchFragment : Fragment() {
     private fun setOnMealCardClick() {
         binding.searchedMealCard.setOnClickListener {
             val intent = Intent(context, MealActivity:: class.java)
-
             intent.putExtra(MEAL_ID, mealId)
             intent.putExtra(MEAL_NAME, mealStr)
             intent.putExtra(MEAL_THUMB, mealThumb)
